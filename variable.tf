@@ -11,5 +11,6 @@ variable "app_registration_owners" {
 
 variable "app_registration_description" {
   type    = string
+  description = "Description for you app"
   default = "Azure App registration created using terraform"
 }
