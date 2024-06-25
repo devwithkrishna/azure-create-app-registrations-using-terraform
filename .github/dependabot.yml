@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: terraform
+    directory: /
+    schedule:
+      interval: daily
+    labels:
+      - "terraform-dependancies"
+    assignees:
+      - "githubofkrishnadhas"
+    commit-message:
+      prefix: "dependabot terraform update"
+    target-branch: "main"
+    # Increase the version requirements for Composer only when required
+    versioning-strategy: increase-if-necessary
+    # Dependabot opens a maximum of five pull requests for version updates. Once there are five open pull requests from Dependabot,
+    # Dependabot will not open any new requests until some of those open requests are merged or closed.
+    # Use open-pull-requests-limit to change this limit.
+    open-pull-requests-limit: 10

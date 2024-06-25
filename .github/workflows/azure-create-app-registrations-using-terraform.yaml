@@ -1,0 +1,53 @@
+name: azure-create-app-registrations-using-terraform
+on:
+  workflow_dispatch:
+    inputs:
+      app_registration_name:
+        type: string
+        description: 'Azure App Registation Name'
+        required: true
+      app_registration_description:
+        type: string
+        required: false
+        description: 'Provide description for your application if any'
+      app_registration_owners:
+        type: string
+        required: true
+        description: 'Owners of Application registration. Seperate by comma if more than one owner'
+
+run-name: Creating app registration ${{ inputs.app_registration_name }} in azure
+jobs:
+  azure-create-app-registrations-using-terraform:
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.OWNER_SP_APP_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.OWNER_SP_APP_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.0"
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -var="app_registration_name=${{ inputs.app_registration_name }}" -var="app_registration_owners=${{ inputs.app_registration_owners }}" -var="app_registration_description=${{ inputs.app_registration_description }}" -out "plan.out"
+
+      - name: Terraform show
+        run: terraform show "plan.out"
+
+      - name: Terraform Apply
+        run: terraform apply --auto-approve "plan.out"
+
+      - name: Application created in azure
+        run: |
+          echo App registration created - ${{ inputs.app_registration_name }}
+
+      - name: Process Completed
+        run: echo "Completed...."
