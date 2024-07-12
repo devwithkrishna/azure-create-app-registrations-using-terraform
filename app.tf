@@ -17,10 +17,15 @@ resource "azuread_application" "app" {
   description  = var.app_registration_description
 }
 
+# Time based expiry
+resource "time_rotating" "time" {
+  rotation_days = var.app_registation_expiry
+}
+
 # Azure app registration secret
 resource "azuread_application_password" "app" {
   application_id    = azuread_application.app.id
-  end_date_relative = "720h" # a month
+  end_date = time_rotating.time.rotation_rfc3339
   display_name      = "Secret Created Using Terraform"
 }
 
