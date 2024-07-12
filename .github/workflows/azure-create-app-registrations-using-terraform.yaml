@@ -9,11 +9,11 @@ on:
       app_registration_description:
         type: string
         required: false
-        description: 'Provide description for your application if any'
+        description: 'Provide description for your application if any. Donot enclose in quotes'
       app_registration_owners:
         type: string
         required: true
-        description: 'Owners of Application registration. Seperate by comma if more than one owner. Donot enclose in quotes'
+        description: 'Owners of Application registration. Seperate by comma if more than one owner.'
       app_registation_expiry:
         default : "60"
         type: choice
