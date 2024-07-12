@@ -51,10 +51,13 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -var="app_registration_name=${{ inputs.app_registration_name }}" \
+        run: |
+          terraform plan \
+          -var="app_registration_name=${{ inputs.app_registration_name }}" \
           -var="app_registration_owners=${{ inputs.app_registration_owners }}" \
           -var="app_registration_description=${{ inputs.app_registration_description }}" \
-          -var="app_registation_expiry=${{ inputs.app_registation_expiry }}" -out "plan.out"
+          -var="app_registation_expiry=${{ inputs.app_registation_expiry }}" \
+          -out "plan.out"
 
       - name: Terraform show
         run: terraform show "plan.out"
