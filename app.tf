@@ -21,7 +21,7 @@ resource "azuread_application" "app" {
 resource "azuread_application_password" "app" {
   application_id    = azuread_application.app.id
   end_date_relative = "720h" # a month
-  display_name = "Secret Created Using Terraform"
+  display_name      = "Secret Created Using Terraform"
 }
 
 # Azure service principal linked to App registration
