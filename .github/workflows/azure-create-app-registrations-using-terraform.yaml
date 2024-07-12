@@ -13,7 +13,7 @@ on:
       app_registration_owners:
         type: string
         required: true
-        description: 'Owners of Application registration. Seperate by comma if more than one owner'
+        description: 'Owners of Application registration. Seperate by comma if more than one owner. Donot enclose in quotes'
 
 run-name: Creating app registration ${{ inputs.app_registration_name }} in azure
 jobs:
