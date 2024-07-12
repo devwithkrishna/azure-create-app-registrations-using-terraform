@@ -1,5 +1,5 @@
 variable "app_registration_name" {
-  default     = "reader"
+  default     = "test-app"
   type        = string
   description = "New azure App registration name"
 }
@@ -10,7 +10,7 @@ variable "app_registration_owners" {
 }
 
 variable "app_registration_description" {
-  type    = string
+  type        = string
   description = "Description for you app"
-  default = "Azure App registration created using terraform"
+  default     = "Azure App registration created using terraform"
 }
