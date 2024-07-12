@@ -14,6 +14,18 @@ on:
         type: string
         required: true
         description: 'Owners of Application registration. Seperate by comma if more than one owner. Donot enclose in quotes'
+      app_registation_expiry:
+        default : "60"
+        type: choice
+        options:
+          - 30
+          - 60
+          - 90
+          - 120
+          - 150
+          - 180
+          - 270
+          - 360
 
 run-name: Creating app registration ${{ inputs.app_registration_name }} in azure
 jobs:
@@ -39,7 +51,10 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -var="app_registration_name=${{ inputs.app_registration_name }}" -var="app_registration_owners=${{ inputs.app_registration_owners }}" -var="app_registration_description=${{ inputs.app_registration_description }}" -out "plan.out"
+        run: terraform plan -var="app_registration_name=${{ inputs.app_registration_name }}" \
+          -var="app_registration_owners=${{ inputs.app_registration_owners }}" \
+          -var="app_registration_description=${{ inputs.app_registration_description }}" \
+          -var="app_registation_expiry=${{ inputs.app_registation_expiry }}" -out "plan.out"
 
       - name: Terraform show
         run: terraform show "plan.out"
