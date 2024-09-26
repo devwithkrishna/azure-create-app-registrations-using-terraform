@@ -1,5 +1,5 @@
 variable "app_registration_name" {
-  default     = "new-sp-app-test"
+  default     = ""
   type        = string
   description = "New azure App registration name"
 }
@@ -7,7 +7,7 @@ variable "app_registration_name" {
 variable "app_registration_owners" {
   type        = string
   description = "App registration owners"
-  default     = "krishnadhasnk@gmail.com"
+  default     = ""
 }
 
 variable "app_registration_description" {
