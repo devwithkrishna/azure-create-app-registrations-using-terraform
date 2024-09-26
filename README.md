@@ -12,6 +12,7 @@ Create app registrations in Azure using terraform and github workflow
 | app_registration_name | Azure App registration name | string | :heavy_check_mark: |
 | app_registration_owner | App registration owners names | string | :heavy_check_mark: |
 | app_registration_description | App registration description | string | |
+| app_registation_expiry | App registration secret expiry | Choice - `30`,`60`,`90`,`120`,`150`,`180`,`270`,`360` | :heavy_check_mark: |
 
 # Terraform commands and How to run the code locally
 
@@ -54,6 +55,16 @@ env:
 `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET`, `ARM_TENANT_ID`, `ARM_SUBSCRIPTION_ID` are required Environment variables.
 
 I used GitHub secrets on the workflow for authentication. 
+
+
+##### This creates a secret with specified validity and updates the same on keyvault
+
+```
+<SP name>-SECRET
+<SP name-APPID>
+<SP name-TENANT>
+```
+* when creating Keyvault secrets, SP names will be converted to all capital letters
 
 
 #References

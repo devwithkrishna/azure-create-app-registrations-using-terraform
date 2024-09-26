@@ -1,14 +1,8 @@
 # Get Obj ID of users to be added as owners
-# data "azuread_user" "user" {
-# # Splitting the owners received as a strings seperated by commas into a list using split function
-#   for_each = toset(split(",", var.app_registration_owners))
-#   mail     = each.value
-# }
 data "azuread_user" "owners" {
   for_each = toset(split(",", var.app_registration_owners))
   mail     = each.key
 }
-
 
 # Azure app registration 
 resource "azuread_application" "app" {
@@ -19,14 +13,14 @@ resource "azuread_application" "app" {
 
 # Time based expiry
 resource "time_rotating" "time" {
-  rotation_days = var.app_registation_expiry
+  rotation_days = var.app_registration_expiry
 }
 
 # Azure app registration secret
 resource "azuread_application_password" "app" {
-  application_id    = azuread_application.app.id
-  end_date = time_rotating.time.rotation_rfc3339
-  display_name      = "Secret Created Using Terraform"
+  application_id = azuread_application.app.id
+  end_date       = time_rotating.time.rotation_rfc3339
+  display_name   = "Secret Created Using Terraform"
 }
 
 # Azure service principal linked to App registration
