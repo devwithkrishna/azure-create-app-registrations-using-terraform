@@ -33,6 +33,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 .idea/*
-set_env.sh
+set_env*
 *.out
 *.hcl

@@ -15,17 +15,17 @@ on:
         required: true
         description: 'Owners of Application registration. Seperate by comma if more than one owner.'
       app_registation_expiry:
-        default : "60"
+        default: "60"
         type: choice
         options:
-          - 30
-          - 60
-          - 90
-          - 120
-          - 150
-          - 180
-          - 270
-          - 360
+        - 30
+        - 60
+        - 90
+        - 120
+        - 150
+        - 180
+        - 270
+        - 360
 
 run-name: Creating app registration ${{ inputs.app_registration_name }} in azure
 jobs:
@@ -37,37 +37,24 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref_name }} # checcks out the same branch as the workflow is run from
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.ref_name }} # checcks out the same branch as the workflow is run from
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.6.0"
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.6.0"
 
-      - name: Terraform Init
-        run: terraform init
+    - name: Execute Terraform
+      run: |
+        bash terraform.sh
 
-      - name: Terraform Plan
-        run: |
-          terraform plan \
-          -var="app_registration_name=${{ inputs.app_registration_name }}" \
-          -var="app_registration_owners=${{ inputs.app_registration_owners }}" \
-          -var="app_registration_description=${{ inputs.app_registration_description }}" \
-          -var="app_registation_expiry=${{ inputs.app_registation_expiry }}" \
-          -out "plan.out"
 
-      - name: Terraform show
-        run: terraform show "plan.out"
+    - name: Application created in azure
+      run: |
+        echo App registration created - ${{ inputs.app_registration_name }}
 
-      - name: Terraform Apply
-        run: terraform apply --auto-approve "plan.out"
-
-      - name: Application created in azure
-        run: |
-          echo App registration created - ${{ inputs.app_registration_name }}
-
-      - name: Process Completed
-        run: echo "Completed...."
+    - name: Process Completed
+      run: echo "Completed...."
