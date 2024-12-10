@@ -6,6 +6,7 @@ app_registration_owners="$2"
 app_registration_description="$3"
 app_registration_expiry="$4"
 
+set -x
 
 # Initialize Terraform
 terraform init --upgrade
